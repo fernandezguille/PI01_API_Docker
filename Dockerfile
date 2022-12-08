@@ -1,5 +1,5 @@
 FROM tiangolo/uvicorn-gunicorn-fastapi
-COPY . /usr/src/app
-COPY Datasets /usr/src/app
+COPY ./PI01_DATA05 /usr/src/app
+COPY ./PI01_DATA05/Datasets /usr/src/app
 RUN pip install pandas
 EXPOSE 80
