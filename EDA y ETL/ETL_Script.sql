@@ -1,3 +1,4 @@
+-- Estas dos querys deben realizarse previo a cargar la tabla desde Python
 CREATE DATABASE pi01;
 
 USE pi01;
@@ -47,6 +48,8 @@ CHANGE duration Duration int,
 CHANGE listed_in Listed_in varchar(100),
 CHANGE `description` `Description` varchar(1900),
 CHANGE Platform Platform varchar(7);
+
+-- Dejamos este espacio para realizar un proceso de ETL más profundo, y realizar una mejor limpieza de los datos
 
 -- Consultas a realizarle a la API
 SELECT title

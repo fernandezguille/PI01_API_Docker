@@ -1,31 +1,60 @@
-# PROYECTO INDIVIDUAL 01
+# __PROYECTO INDIVIDUAL 01__
 
-_URL del video aquí_
+### Introducción
 
-El proyecto consiste en realizar una ingesta de datos desde diversas fuentes, posteriormente aplicar las transformaciones que consideren pertinentes, y luego disponibilizar los datos limpios para su consulta a través de una API. Esta API deberán construirla en un entorno virtual dockerizado.
+Éste el el primer proyecto individual, que forma parte de la formación práctica del bootcamp de Data Science de Henry. El mismo consiste en realizar una ingesta de datos desde diversas fuentes, aplicar las transformaciones que se consideren pertinentes, y luego disponibilizar los datos limpios para su consulta a través de una API. Esta API se debe construir en un entorno virtual dockerizado.
 
 [Consigna completa del PI](https://github.com/HX-FAshur/PI01_DATA05)
 
-## Los pasos para realizar el proyecto son:
+En el siguiente video explico los pasos detallados a continuación:
+
+_URL del video aquí_
+
+## Pasos para realizar el proyecto:
 1. EDA (Exploratory data analysis)
 2. Relacionar datasets y crear tabla conjunta
 3. ETL (Extraction, Transform, Load)
 4. Crear una API con FastAPI
 5. Crear un entorno en Docker que contenga la API
 6. Realizar las consultas
+7. Realizar un deployment en Mogenius _(paso extra)_
 
-_Los archivos para realizar el proyecto se encuentran dentro de la carpeta Datasets._
+## Archivos del repositorio
+Los archivos raw utilizados para realizar el proyecto se encuentran dentro de la carpeta Datasets, y también el archivo que se creó con los resultados del ETL.  
+Dockerfile, main.py y requirements.txt son los archivos que se utilizaron para cargar el Contenedor y la API.
+Para realizar EDA y ETL utilizamos los archivos que se encuentran en la carpeta que lleva ese nombre, ETL_Script.sql y PI_Script.ipynb.
 
-#### EDA
-Para el primer paso, se realizó el EDA con el archivo PI_Script.ipynb. Se exploraron los datasets, eliminando duplicados, y revisando tipos de datos
+## EDA
+Para el primer paso, se realizó el EDA con el archivo PI_Script.ipynb. Se exploraron los datasets, eliminando datos duplicados, revisando tipos de datos y faltantes. En base a este análisis, se obtuvieron algunas conclusiones iniciales.
 
-#### Relacionar
-Se relacionaron los datasets en un nuevo Dataset, agregando un Feature haciendo referencia a la tabla de origen. Luego, se cargaron a una base de datos en MySQL.
+## Relacionar
+Se relacionaron los datasets en un nuevo Dataset, agregando un Feature haciendo referencia a la tabla de origen. Luego, se cargaron a una base de datos en MySQL para realizar algunas transformaciones.
 
-#### ETL
-Con el ETL_Script se realizaron diversas consultas, para poder adecuar el tipo de los datos. También se realizaron las transformaciones de valores pertinentes.
+## ETL
+Con el ETL_Script.sql se realizaron diversas consultas, para poder adecuar el tipo de los datos. Se realizaron algunas transformaciones de valores pertinentes, teniendo en cuenta cuáles eran los Features necesarios para las consultas. Se dejaron de lado algunas transformaciones que eran menos importantes, y que no eran tan relevantes, debido a que el foco del trabajo no es el ETL, sino las siguientes etapas.
 
-#### Crear una API con FastAPI
-Dentro de la carpeta FastAPI, se encuentra el archivo main.py, con el cual se levantó la API de manera local, y se configuraron las funciones para la realización de consultas. La API se conecta a la base de datos de MySQL para realizar las Querys, y devuelve los resultados esperados.
+## Crear una API con FastAPI
+Para la creación de la API, se utilizó el archivo main.py. Con eso se levantó la API de manera local, y se configuraron las funciones para la realización de consultas. La API carga el CSV ya transformado para realizar las consultas, y devuelve los resultados esperados.  
 
-#### Entorno Docker
+Para este proyecto, se solicitaban únicamente 4 tipos de consultas
++ Título de más duración, por plataforma y por año:  
+    El request debe ser: /get_max_duration(año, plataforma, [min o season])
+
++ Total de películas y series, por plataforma:  
+    El request debe ser: /get_count_plataform(plataforma)  
+  
++ Género con mayor ocurrencias, y su plataforma:  
+    El request debe ser: get_listedin(genero)  
+
++ Actor con mayor ocurrencias, por plataforma y por año:  
+    El request debe ser: get_actor(plataforma, año)
+
+## Entorno Docker
+Para la creación del contenedor, se utilizó Dockerfile y requirements.txt. El primero indica que vamos a utilizar un entorno Python con las librerías que aparecen en el segundo, que debe contener los archivos dentro de Datasets, y que tiene que instanciar Uvicorn para poder correr la API. Todo esto se realiza con la aplicación Docker Desktop para Windows, y con algunas líneas en la terminal del Visual Studio Code.
+
+## Consultas
+Una vez que ya está activo el contenedor, se carga la URL docs para realizar las consultas, o también con la URL directa:  
+localhost:8000/get_max_duration(2018,'Hulu','min')  
+Al revisar que las consultas entregan los resultados esperados, se dan por finalizadas las consignas requeridas.
+
+## Mogenius - Paso extra
