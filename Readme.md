@@ -21,7 +21,7 @@ _URL del video aquí_
 
 ## Archivos del repositorio
 Los archivos raw utilizados para realizar el proyecto se encuentran dentro de la carpeta Datasets, y también el archivo que se creó con los resultados del ETL.  
-Dockerfile, main.py y requirements.txt son los archivos que se utilizaron para cargar el Contenedor y la API.
+Dockerfile y main.py son los archivos que se utilizaron para cargar el Contenedor y la API.
 Para realizar EDA y ETL utilizamos los archivos que se encuentran en la carpeta que lleva ese nombre, ETL_Script.sql y PI_Script.ipynb.
 
 ## EDA
@@ -50,7 +50,7 @@ Para este proyecto, se solicitaban únicamente 4 tipos de consultas
     El request debe ser: get_actor(plataforma, año)
 
 ## Entorno Docker
-Para la creación del contenedor, se utilizó Dockerfile y requirements.txt. El primero indica que vamos a utilizar un entorno Python con las librerías que aparecen en el segundo, que debe contener los archivos dentro de Datasets, y que tiene que instanciar Uvicorn para poder correr la API. Todo esto se realiza con la aplicación Docker Desktop para Windows, y con algunas líneas en la terminal del Visual Studio Code.
+Para la creación del contenedor, se utilizó Dockerfile. Este nos indica que vamos a utilizar un contenedor que ya trae las funciones de Python, con las librerías necesarias para cargar la API. Esto se realiza con la aplicación Docker Desktop para Windows, y con algunas líneas en la terminal del Visual Studio Code.
 
 ## Consultas
 Una vez que ya está activo el contenedor, se carga la URL docs para realizar las consultas, o también con la URL directa:  
@@ -58,3 +58,8 @@ localhost:8000/get_max_duration(2018,'Hulu','min')
 Al revisar que las consultas entregan los resultados esperados, se dan por finalizadas las consignas requeridas.
 
 ## Mogenius - Paso extra
+Para levantar el contenedor con la API y que se pueda consumir desde cualquier sitio, se utilizó Mogenius. Con todo los archivos en GitHub, se otorga el permiso en Mogenius para poder consumir la API.  
+
+[Link a FastAPI](https://pi01-api-docke-prod-pi-01-fernandezguille-brfrrr.mo5.mogenius.io/docs)
+
+¡Muchas gracias por llegar hasta aquí!
