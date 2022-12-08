@@ -7,7 +7,7 @@ app = FastAPI()
 @app.on_event('startup')
 def startup():
     global DF
-    DF = pd.read_csv('All_titles.csv')
+    DF = pd.read_csv('Datasets/All_titles.csv')
 
 # Cargamos información sobre el proyecto
 @app.get('/')
