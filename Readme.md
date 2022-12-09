@@ -8,7 +8,7 @@
 
 En el siguiente video explico los pasos detallados a continuación:
 
-[<img src="https://user-images.githubusercontent.com/110403753/206619791-f63f171b-6736-4415-843e-f50f1e8de46f.png">](https://youtu.be/ThbD2etUDbg)
+[<img src="https://user-images.githubusercontent.com/110403753/206619791-f63f171b-6736-4415-843e-f50f1e8de46f.png" width="200px">](https://youtu.be/ThbD2etUDbg)
 
 ## Pasos para realizar el proyecto:
 1. EDA (Exploratory data analysis)
@@ -34,6 +34,8 @@ Se relacionaron los datasets en un nuevo Dataset, agregando un Feature haciendo 
 Con el ETL_Script.sql se realizaron diversas consultas, para poder adecuar el tipo de los datos. Se realizaron algunas transformaciones de valores pertinentes, teniendo en cuenta cuáles eran los Features necesarios para las consultas. Se dejaron de lado algunas transformaciones que eran menos importantes, y que no eran tan relevantes, debido a que el foco del trabajo no es el ETL, sino las siguientes etapas.
 
 ## Crear una API con FastAPI
+<img src="https://user-images.githubusercontent.com/110403753/206620522-26ed76ae-5cfa-421e-9d6a-94cae6fd6936.png" width="200px">
+
 Para la creación de la API, se utilizó el archivo main.py. Con eso se levantó la API de manera local, y se configuraron las funciones para la realización de consultas. La API carga el CSV ya transformado para realizar las consultas, y devuelve los resultados esperados.  
 
 Para este proyecto, se solicitaban únicamente 4 tipos de consultas
@@ -50,6 +52,7 @@ Para este proyecto, se solicitaban únicamente 4 tipos de consultas
     El request debe ser: get_actor(plataforma, año)
 
 ## Entorno Docker
+<img src="https://user-images.githubusercontent.com/110403753/206620894-3174ce24-1fca-419a-a900-94686a8e2b8c.png" width="200px">
 Para la creación del contenedor, se utilizó Dockerfile. Este nos indica que vamos a utilizar un contenedor que ya trae las funciones de Python, con las librerías necesarias para cargar la API. Esto se realiza con la aplicación Docker Desktop para Windows, y con algunas líneas en la terminal del Visual Studio Code.
 
 ## Consultas
@@ -60,6 +63,8 @@ Al revisar que las consultas entregan los resultados esperados, se dan por final
 ## Mogenius - Paso extra
 Para levantar el contenedor con la API y que se pueda consumir desde cualquier sitio, se utilizó Mogenius. Con todo los archivos en GitHub, se otorga el permiso en Mogenius para poder consumir la API.  
 
-[Link a FastAPI](https://pi01-api-docke-prod-pi-01-fernandezguille-brfrrr.mo5.mogenius.io/docs)
+En el siguiente link pueden consultar el Deployment en Mogenius:
+
+[<img src="https://user-images.githubusercontent.com/110403753/206621156-690eebab-6b72-4b4e-b77a-0079e6da0791.png" width="200px">](https://pi01-api-docke-prod-pi-01-fernandezguille-brfrrr.mo5.mogenius.io/docs)
 
 ¡Muchas gracias por llegar hasta aquí!
