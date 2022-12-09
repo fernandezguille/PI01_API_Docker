@@ -8,7 +8,7 @@
 
 En el siguiente video explico los pasos detallados a continuación:
 
-_URL del video aquí_
+[<img src="https://user-images.githubusercontent.com/110403753/206619791-f63f171b-6736-4415-843e-f50f1e8de46f.png">](https://youtu.be/ThbD2etUDbg)
 
 ## Pasos para realizar el proyecto:
 1. EDA (Exploratory data analysis)
