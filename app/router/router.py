@@ -1,30 +1,30 @@
-from fastapi import FastAPI
+from fastapi import APIRouter
 import pandas as pd
 
-app = FastAPI()
+user = APIRouter()
 
 # Cargamos la base de datos al iniciar Uvicorn
-@app.on_event('startup')
+@user.on_event('startup')
 def startup():
     global DF
     DF = pd.read_csv('Datasets/All_titles.csv')
 
 # Cargamos información sobre el proyecto
-@app.get('/')
+@user.get('/')
 async def index():
     return {'PI01 para Henry de Guillermo Fernández'}
 
 # Cargamos información sobre la API
-@app.get('/about')
+@user.get('/about')
 async def about():
     return 'API creada con FastAPI y uvicorn'
 
 # En todas las funciones que usen formato str, se eliminan las ' interiores con el comando replace, y se aplica la primer
 # letra mayúscula, para que coincida con el Dataset, independiente de cómo lo ingresa el cliente
 
-
-# URL para realizar la consulta localhost:8000/get_max_duration(2018,'Hulu','min')
-@app.get('/get_max_duration({year},{platform},{tipo})')
+# Título de más duración, por plataforma y por año:  
+# URL para realizar la consulta /get_max_duration(año,'plataforma','[min o season]')
+@user.get('/get_max_duration({year},{platform},{tipo})')
 async def get_max_duration(
                             year:int,
                             platform:str,
@@ -40,9 +40,9 @@ async def get_max_duration(
     # Retornamos el valor del título
     return DF.loc[Max_duration.Duration.idxmax()].Title
 
-
-# URL para realizar la consulta localhost:8000/get_count_plataform('Netflix')
-@app.get('/get_count_plataform({platform})')
+# Total de películas y series, por plataforma:
+# URL para realizar la consulta /get_count_plataform('platform')
+@user.get('/get_count_plataform({platform})')
 async def get_count_plataform(platform:str):
     platform = platform.replace("'","")
     platform = platform.capitalize()
@@ -52,9 +52,9 @@ async def get_count_plataform(platform:str):
     # Retornamos el valor en formato str para poder aclarar a qué corresponde cada cantidad
     return platform, f'Movie: {movies}', f'TV Show: {series}'
 
-
-# URL para realizar la consulta localhost:8000/get_listedin('Comedy')
-@app.get('/get_listedin({genre})')
+# Género con mayor ocurrencias, y su plataforma:  
+# URL para realizar la consulta /get_listedin('genre')
+@user.get('/get_listedin({genre})')
 async def get_listedin(genre:str):
     genre = genre.replace("'","")
     genre = genre.capitalize()
@@ -68,9 +68,9 @@ async def get_listedin(genre:str):
     # Retornamos la plataforma en la que el parámetro  más se repite y la cantidad
     return max(apariciones), Plataformas[apariciones.index(max(apariciones))]
 
-
-# URL para realizar la consulta localhost:8000/get_actor('Netflix',2018)
-@app.get('/get_actor({platform},{year})')
+# Actor con mayor ocurrencias, por plataforma y por año:
+# URL para realizar la consulta /get_actor('Netflix',2018)
+@user.get('/get_actor({platform},{year})')
 async def get_actor(
                     platform:str,
                     year:int):
