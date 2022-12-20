@@ -95,7 +95,7 @@ En el siguiente link pueden consultar el Deployment en Mogenius:
 
 [<img src="https://user-images.githubusercontent.com/110403753/206621156-690eebab-6b72-4b4e-b77a-0079e6da0791.png" width="200px">](https://pi01-api-docke-prod-pi-01-fernandezguille-brfrrr.mo5.mogenius.io/docs)
 
-<br>
+<hr>
 
 ## Conclusión
 Al realizar este proyecto, se logró integrar los conceptos aprendidos sobre Python, e investigar sobre nuevos conocimientos a través de investigación sobre API y Docker. También hay mucho trabajo por realizar en SQL, que se intentará lograr con el paso del tiempo.
