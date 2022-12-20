@@ -1,4 +1,4 @@
-<h1 align=center> __PROYECTO INDIVIDUAL 01__ </h1>
+<h1 align=center> PROYECTO INDIVIDUAL 01 </h1>
 <h2 align=center> EDA-ETL-FastAPI-Docker en Datasets de plataformas de Streaming </h2>
 
 <br>
