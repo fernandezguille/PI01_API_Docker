@@ -44,7 +44,7 @@ En el siguiente video explico los pasos detallados a continuación:
 
 ### Archivos del repositorio
 Los archivos raw utilizados para realizar el proyecto se encuentran dentro de la carpeta Datasets, y también el archivo que se creó con los resultados del ETL.  
-Dockerfile y los archivos dentro de app se utilizaron para cargar el Contenedor y la API.
+Dockerfile y main.py se utilizaron para cargar el Contenedor y la API.
 Para realizar EDA y ETL utilizamos los archivos que se encuentran en la carpeta que lleva ese nombre, ETL_Script.sql y PI_Script.ipynb.
 
 ## EDA
