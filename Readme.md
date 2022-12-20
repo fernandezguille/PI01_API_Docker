@@ -13,7 +13,7 @@ Realizar una ingesta de datos desde diversas fuentes, aplicar las transformacion
 [Consigna completa del PI](https://github.com/HX-FAshur/PI01_DATA05)
 
 ### Contexto
-La cantidad de contenidos disponibles hoy en las plataformas está en permanente crecimiento. Para este trabajo, se trabajó con datasets de las plataformas Amazon, Disney, Hulu y Netflix.
+La cantidad de contenidos disponibles hoy en las plataformas está en permanente crecimiento. Para este trabajo, se utilizaron datasets de las plataformas Amazon, Disney, Hulu y Netflix.
 
 ### Tecnologías utilizadas
 * [Python](https://docs.python.org/3/)
