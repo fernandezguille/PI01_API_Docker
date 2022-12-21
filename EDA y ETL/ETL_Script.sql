@@ -30,9 +30,22 @@ SELECT *, (length(description)) AS Largo FROM pi01.title ORDER BY Largo DESC LIM
 SELECT *, (length(Platform)) AS Largo FROM pi01.title ORDER BY Largo DESC LIMIT 5; -- 7
 
 -- Realizamos algunas modificaciones de tipos de datos
+UPDATE title SET duration = rating
+WHERE rating LIKE "%season%";
+
+UPDATE title SET rating = 'Sin_datos'
+WHERE rating LIKE "%season%";
+
+UPDATE title SET duration = rating
+WHERE rating LIKE "%min%";
+
+UPDATE title SET rating = 'Sin_datos'
+WHERE rating LIKE "%min%";
+
 UPDATE title SET duration = REPLACE(Duration,'Seasons',''),
 	duration = REPLACE(Duration,'Season',''),
-   	duration = REPLACE(Duration,'min','');
+   	duration = REPLACE(Duration,'min',''),
+    duration = REPLACE(Duration,'Sin_datos', 0);
 
 ALTER TABLE `pi01`.`title` 
 CHANGE COLUMN `index` `ID` int not NULL,
@@ -51,20 +64,18 @@ CHANGE Platform Platform varchar(7);
 
 -- Dejamos este espacio para realizar un proceso de ETL más profundo, y realizar una mejor limpieza de los datos
 
--- Consultas a realizarle a la API
-SELECT title
-FROM title
-WHERE Release_year = 2018 AND Platform = 'Hulu' AND Type = 'Movie'
-ORDER BY Duration DESC
-LIMIT 1;
+UPDATE title SET director = "Sin_datos"
+WHERE director = '1';
 
-SELECT Platform, Type, Count(Type)
-FROM title
-GROUP BY Platform, Type
-HAVING Platform = 'Netflix';
+UPDATE title SET Cast = "Sin_datos"
+WHERE Cast = '1';
 
-SELECT Platform, Count(*) AS Cantidad
-FROM (SELECT * FROM title WHERE Listed_in LIKE '%Docu%') AS Gender
-GROUP BY Platform
-ORDER BY Cantidad DESC
-LIMIT 1;
+UPDATE title SET Cast = REPLACE(Cast,"'",'')
+WHERE ID = 16293;
+
+UPDATE title SET Cast = "Sin_datos"
+WHERE ID = 6416;
+
+SELECT Director FROM title WHERE Director LIKE "%Century%";
+UPDATE title SET Director = "20th Century Fox"
+WHERE Director LIKE "%Century%";
