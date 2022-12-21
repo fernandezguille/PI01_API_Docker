@@ -8,13 +8,14 @@ app = FastAPI(title= "API to consult Streaming platforms data",
 # Cargamos la base de datos al iniciar Uvicorn
 @app.on_event('startup')
 def startup():
-    global DF
+    global DF; global plataformas
     DF = pd.read_csv('Datasets/All_titles.csv')
+    plataformas = ['Amazon', 'Hulu', 'Netflix', 'Disney']
 
 # Cargamos información sobre el proyecto
 @app.get('/')
 async def index():
-    return {'PI01 para Henry de Guillermo Fernández'}
+    return 'PI01 para Henry de Guillermo Fernández'
 
 # Cargamos información sobre la API
 @app.get('/about')
@@ -33,12 +34,15 @@ async def get_max_duration(
                             tipo:str):
     platform = platform.replace("'","")
     platform = platform.capitalize()
+    if platform not in plataformas: return f'Sin datos para {platform}' # Verificacion de plataforma
     tipo = tipo.replace("'","")
     tipo = tipo.lower()
     if tipo == 'min': tipo = 'Movie'    # Determinamos si es pelicula o serie de acuerdo al parámetro
     elif tipo == 'season': tipo = 'TV Show'
+    else: return f'El tipo debe ser "min" o "season"'   # Verificación de tipo
     # Aplicamos una máscara de acuerdo a los parámetros
     Max_duration = DF[(DF.Platform == platform) & (DF.Release_year == year) & ((DF.Type == tipo) )]
+    if Max_duration.shape[0] == 0: return f'Sin datos del año {year}'  # Verificacion de año
     # Retornamos el valor del título
     return DF.loc[Max_duration.Duration.idxmax()].Title
 
@@ -48,6 +52,7 @@ async def get_max_duration(
 async def get_count_plataform(platform:str):
     platform = platform.replace("'","")
     platform = platform.capitalize()
+    if platform not in plataformas: return f'Sin datos para {platform}' # Verificacion de plataforma
     Count_platform = DF[(DF.Platform == platform)]  # Aplicamos una máscara de acuerdo al parámetro
     movies = int(Count_platform[Count_platform.Type == 'Movie'].Type.value_counts()[0]) # Contamos la cantidad de ocurrencias
     series = int(Count_platform[Count_platform.Type == 'TV Show'].Type.value_counts()[0])
@@ -67,6 +72,7 @@ async def get_listedin(genre:str):
         DF_por_plataforma['Ind'] = DF_por_plataforma.Listed_in.str.find(genre)
         # Contamos la cantidad de veces que se encuentra el parámetro y lo agregamos a la lista
         apariciones.append(DF_por_plataforma[DF_por_plataforma.Ind != -1].Ind.shape[0])
+    if apariciones == []: return f'El género {genre} no ha sido encontrado'     # Verificacion de genero
     # Retornamos la plataforma en la que el parámetro  más se repite y la cantidad
     return max(apariciones), Plataformas[apariciones.index(max(apariciones))]
 
@@ -78,6 +84,7 @@ async def get_actor(
                     year:int):
     platform = platform.replace("'","")
     platform = platform.capitalize()
+    if platform not in plataformas: return f'Sin datos para {platform}' # Verificacion de plataforma
     actores, repeticiones = list(), list()  # Creamos dos listas vacías para colocar cada actor y la cantidad de veces
     # Aplicamos máscara para obtener una lista de listas de actores, que no tengan nulos
     Cast_list = list(DF[(DF.Platform == platform) & (DF.Release_year == year)].Cast.fillna('Sin_datos'))
@@ -94,6 +101,6 @@ async def get_actor(
                 else:    
                     actores.append(elem)
                     repeticiones.append(1)
-    if actores == []: return 'No hay datos' # Para el caso de que ambas listas queden vacías, que no retorne error
+    if actores == []: return f'Sin datos del año {year}'  # Verificacion de año
     # Retornamos la plataforma, el actor que más se repite en esa plataforma y ese año, y cuántas veces lo hace
     return (platform, max(repeticiones), actores[repeticiones.index(max(repeticiones))])
