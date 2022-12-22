@@ -1,7 +1,6 @@
 -- Estas dos querys deben realizarse previo a cargar la tabla desde Python
-CREATE DATABASE pi01;
-
-USE pi01;
+# CREATE DATABASE pi01;
+# USE pi01;
 
 -- Al tener una columna indice, la columna show_id ya no aporta valor, por lo que la retiramos
 ALTER TABLE title DROP COLUMN show_id;
@@ -79,3 +78,65 @@ WHERE ID = 6416;
 SELECT Director FROM title WHERE Director LIKE "%Century%";
 UPDATE title SET Director = "20th Century Fox"
 WHERE Director LIKE "%Century%";
+
+-- Realizamos únicamente transformaciones en las columnas Cast y Listed_in, que serán las consultadas por la API
+
+SELECT DISTINCT listed_in FROM genre ORDER BY 1;
+
+UPDATE title SET Listed_in = REPLACE(Listed_in,'TV ','');
+UPDATE title SET Listed_in = REPLACE(Listed_in,'Action & Adventure','Action, Adventure');
+UPDATE title SET Listed_in = REPLACE(Listed_in,'Action-Adventure','Action, Adventure');
+UPDATE title SET Listed_in = REPLACE(Listed_in,' and Culture',', Culture');
+UPDATE title SET Listed_in = REPLACE(Listed_in,'Animals & Nature','Animals, Nature');
+UPDATE title SET Listed_in = REPLACE(Listed_in,'Anime Features','Anime');
+UPDATE title SET Listed_in = REPLACE(Listed_in,'Anime Series','Anime');
+UPDATE title SET Listed_in = REPLACE(Listed_in,'British TV Shows','British');
+UPDATE title SET Listed_in = REPLACE(Listed_in,'Children & Family Movies','Children, Family');
+UPDATE title SET Listed_in = REPLACE(Listed_in,'Classic & Cult TV','Classic, Cult');
+UPDATE title SET Listed_in = REPLACE(Listed_in,'Classic Movies','Classic');
+UPDATE title SET Listed_in = REPLACE(Listed_in,'Classics','Classic');
+UPDATE title SET Listed_in = REPLACE(Listed_in,'Comedies','Comedy');
+UPDATE title SET Listed_in = REPLACE(Listed_in,'Concert Film','Concert');
+UPDATE title SET Listed_in = REPLACE(Listed_in,'Crime TV Shows','Crime');
+UPDATE title SET Listed_in = REPLACE(Listed_in,'Cult Movies','Cult');
+UPDATE title SET Listed_in = REPLACE(Listed_in,'Documentaries','Documentary');
+UPDATE title SET Listed_in = REPLACE(Listed_in,'Dramas','Drama');
+UPDATE title SET Listed_in = REPLACE(Listed_in,'Faith and Spirituality','Faith & Spirituality');
+UPDATE title SET Listed_in = REPLACE(Listed_in,'Game Shows','Game Show');
+UPDATE title SET Listed_in = REPLACE(Listed_in,'Historical','History');
+UPDATE title SET Listed_in = REPLACE(Listed_in,'Horror Movies','Horror');
+UPDATE title SET Listed_in = REPLACE(Listed_in,'Independent Movies','Independent');
+UPDATE title SET Listed_in = REPLACE(Listed_in,'International Movies','International');
+UPDATE title SET Listed_in = REPLACE(Listed_in,'International TV Shows','International');
+UPDATE title SET Listed_in = REPLACE(Listed_in,"Kids' TV",'Kids');
+UPDATE title SET Listed_in = REPLACE(Listed_in,"Korean TV Shows",'Korean');
+UPDATE title SET Listed_in = REPLACE(Listed_in,"LGBTQ Movies",'LGBTQ+');
+UPDATE title SET Listed_in = REPLACE(Listed_in,"LGBTQ",'LGBTQ+');
+UPDATE title SET Listed_in = REPLACE(Listed_in,'Lifestyle & Culture','Lifestyle, Culture');
+UPDATE title SET Listed_in = REPLACE(Listed_in,"Mysteries",'Mystery');
+UPDATE title SET Listed_in = REPLACE(Listed_in,'Music & Musicals','Music, Musical');
+UPDATE title SET Listed_in = REPLACE(Listed_in,'Music Videos and Concerts','Music, Concert');
+UPDATE title SET Listed_in = REPLACE(Listed_in,'Reality TV','Reality');
+UPDATE title SET Listed_in = REPLACE(Listed_in,'Romantic Movies','Romance');
+UPDATE title SET Listed_in = REPLACE(Listed_in,'Romantic TV Shows','Romance');
+UPDATE title SET Listed_in = REPLACE(Listed_in,'Sci-Fi & Fantasy','Sci-Fi, Fantasy');
+UPDATE title SET Listed_in = REPLACE(Listed_in,'Science & Nature TV','Science, Nature');
+UPDATE title SET Listed_in = REPLACE(Listed_in,'Science & Technology','Science, Technology');
+UPDATE title SET Listed_in = REPLACE(Listed_in,'Science Fiction','Sci-Fi');
+UPDATE title SET Listed_in = REPLACE(Listed_in,'Spanish-Language TV Shows','Spanish-Language');
+UPDATE title SET Listed_in = REPLACE(Listed_in,'Sports Movies','Sports');
+UPDATE title SET Listed_in = REPLACE(Listed_in,'Stand-Up Comedy','Stand-Up, Comedy');
+UPDATE title SET Listed_in = REPLACE(Listed_in,'Stand-Up Comedy & Talk Shows','Stand-Up, Comedy, Talk Show');
+UPDATE title SET Listed_in = REPLACE(Listed_in,'Talk Show and Variety','Talk Show, Variety');
+UPDATE title SET Listed_in = REPLACE(Listed_in,'Teen TV Shows','Teen');
+UPDATE title SET Listed_in = REPLACE(Listed_in,'Thrillers','Thriller');
+
+-- Revisamos si quedó algún género sin arreglar
+SELECT Listed_in, count(Listed_in) FROM title GROUP BY 1 HAVING Listed_in LIKE '%Movies%';
+UPDATE title SET Listed_in = REPLACE(Listed_in,'Movies','Sin_dato');
+SELECT Listed_in, count(Listed_in) FROM title GROUP BY 1 HAVING Listed_in LIKE '%TV%';
+
+-- Ahora para Cast
+SELECT *, (length(cast)) AS Largo FROM pi01.actor ORDER BY Largo DESC LIMIT 15;
+
+UPDATE title SET Cast = REPLACE(Cast,'|',',');
