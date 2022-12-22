@@ -138,5 +138,9 @@ SELECT Listed_in, count(Listed_in) FROM title GROUP BY 1 HAVING Listed_in LIKE '
 
 -- Ahora para Cast
 SELECT *, (length(cast)) AS Largo FROM pi01.actor ORDER BY Largo DESC LIMIT 15;
+SELECT cast, count(cast) FROM actor GROUP BY 1;
 
 UPDATE title SET Cast = REPLACE(Cast,'|',',');
+UPDATE title SET Cast = REPLACE(Cast,'1,','');
+UPDATE title SET Cast = REPLACE(Cast,'2,','');
+UPDATE title SET Cast = REPLACE(Cast,'3,','');
