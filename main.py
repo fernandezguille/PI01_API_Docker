@@ -72,7 +72,7 @@ async def get_listedin(genre:str):
         DF_por_plataforma['Ind'] = DF_por_plataforma.Listed_in.str.find(genre)
         # Contamos la cantidad de veces que se encuentra el parámetro y lo agregamos a la lista
         apariciones.append(DF_por_plataforma[DF_por_plataforma.Ind != -1].Ind.shape[0])
-    if apariciones == []: return f'El género {genre} no ha sido encontrado'     # Verificacion de genero
+    if apariciones == [0,0,0,0]: return f'El género {genre} no ha sido encontrado'     # Verificacion de genero
     # Retornamos la plataforma en la que el parámetro  más se repite y la cantidad
     return max(apariciones), Plataformas[apariciones.index(max(apariciones))]
 
