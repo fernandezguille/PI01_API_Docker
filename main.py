@@ -27,29 +27,30 @@ async def about():
 
 # Título de más duración, por plataforma y por año:  
 # URL para realizar la consulta /get_max_duration(año,'plataforma','[min o season]')
-@app.get('/get_max_duration({year},{platform},{tipo})')
+@app.get('/get_max_duration({year},{platform},{min_season})')
 async def get_max_duration(
                             year:int,
                             platform:str,
-                            tipo:str):
+                            min_season:str):
     platform = platform.replace("'","")
     platform = platform.capitalize()
     if platform not in plataformas: return f'Sin datos para {platform}' # Verificacion de plataforma
-    tipo = tipo.replace("'","")
-    tipo = tipo.lower()
-    if tipo == 'min': tipo = 'Movie'    # Determinamos si es pelicula o serie de acuerdo al parámetro
-    elif tipo == 'season': tipo = 'TV Show'
-    else: return f'El tipo debe ser "min" o "season"'   # Verificación de tipo
+    min_season = min_season.replace("'","")
+    min_season_or = min_season.lower()
+    if min_season_or == 'min': min_season = 'Movie'    # Determinamos si es pelicula o serie de acuerdo al parámetro
+    elif min_season_or == 'season': min_season = 'TV Show'
+    else: return f'Se debe especificar el tipo de duración como "min" o "season"'   # Verificación de tipo
     # Aplicamos una máscara de acuerdo a los parámetros
-    Max_duration = DF[(DF.Platform == platform) & (DF.Release_year == year) & ((DF.Type == tipo) )]
+    Max_duration = DF[(DF.Platform == platform) & (DF.Release_year == year) & ((DF.Type == min_season) )]
     if Max_duration.shape[0] == 0: return f'Sin datos del año {year}'  # Verificacion de año
     # Retornamos el valor del título
-    return DF.loc[Max_duration.Duration.idxmax()].Title
+    idx = Max_duration.Duration.idxmax()
+    return DF.loc[idx].Title, f'{DF.loc[idx].Duration} {min_season_or}s'
 
 # Total de películas y series, por plataforma:
-# URL para realizar la consulta /get_count_plataform('platform')
-@app.get('/get_count_plataform({platform})')
-async def get_count_plataform(platform:str):
+# URL para realizar la consulta /get_count_platform('platform')
+@app.get('/get_count_platform({platform})')
+async def get_count_platform(platform:str):
     platform = platform.replace("'","")
     platform = platform.capitalize()
     if platform not in plataformas: return f'Sin datos para {platform}' # Verificacion de plataforma
@@ -103,4 +104,4 @@ async def get_actor(
                     repeticiones.append(1)
     if actores == []: return f'Sin datos del año {year}'  # Verificacion de año
     # Retornamos la plataforma, el actor que más se repite en esa plataforma y ese año, y cuántas veces lo hace
-    return (platform, max(repeticiones), actores[repeticiones.index(max(repeticiones))])
+    return platform, max(repeticiones), actores[repeticiones.index(max(repeticiones))]
