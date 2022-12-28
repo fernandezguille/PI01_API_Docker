@@ -19,7 +19,7 @@ La cantidad de contenidos disponibles hoy en las plataformas está en permanente
 <img src="https://user-images.githubusercontent.com/110403753/209761096-8cfd888f-62a3-4de9-83ac-605f4ce0a025.png" width="200px">
 <img src="https://user-images.githubusercontent.com/110403753/209761412-26b311f6-6847-48b6-8c97-6dd020e93372.png" width="200px">
 <img src="https://user-images.githubusercontent.com/110403753/209761331-68019653-f285-4d73-b225-2280dbb69e83.png" width="200px">
-<img src="https://user-images.githubusercontent.com/110403753/209761759-d7701724-a91c-4ac2-aecf-0d8093edff37.png" width="300px">
+<img src="https://user-images.githubusercontent.com/110403753/209761759-d7701724-a91c-4ac2-aecf-0d8093edff37.png" width="200px">
 </div><hr>
 
 ### Tecnologías utilizadas
